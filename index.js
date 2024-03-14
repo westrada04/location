@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Device Info</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+    #map {
+        height: 300px;
+        margin-bottom: 20px;
+    }
+    h1 {
+        margin-bottom: 20px;
+    }
+    .info {
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+<h1>Device Information</h1>
+<div id="map"></div>
+<div class="info" id="location"></div>
+<div class="info" id="device"></div>
+<div class="info" id="browser"></div>
+<script>
+    // Get location
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var locationInfo = 'Location: ' + latitude + ', ' + longitude;
+        document.getElementById('location').innerHTML = locationInfo;
+
+        // Show map
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: latitude, lng: longitude},
+            zoom: 15
+        });
+
+        var marker = new google.maps.Marker({
+            position: {lat: latitude, lng: longitude},
+            map: map,
+            title: 'Your Location'
+        });
+    });
+
+    // Get device info
+    var deviceInfo = 'Device: ' + navigator.userAgent;
+    document.getElementById('device').innerHTML = deviceInfo;
+
+    // Get browser info
+    var browserInfo = 'Browser: ' + navigator.appName + ' ' + navigator.appVersion;
+    document.getElementById('browser').innerHTML = browserInfo;
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMZJ6AXdpxFR9e2QhpwyHuIj6urzchCXg"></script>
+</body>
+</html>
